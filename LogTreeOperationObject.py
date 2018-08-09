@@ -33,22 +33,22 @@ class LogTreeOperation(object):
         """
         # 1. 得到相关参数（案由名、诉请ID、证据列表、特定案由下的逻辑树）
         appeal_id=self.legal_case.appeal_id # 诉请ID
-        print(u"诉讼请求: %s" %self.log_tree[appeal_id]['name']+str(appeal_id))
+        print(u"Claim: %s" %self.log_tree[appeal_id]['name']+str(appeal_id))
         evidence_list=self.legal_case.evidence_list_plaintiff #证据列表
         evidence_id_list=[]
         for evidence in evidence_list:
             evidence_id=evidence.get_prove_object()
             evidence_id_list.append(evidence_id)
         evidence_id_list_print=[self.log_tree[id]['name']+str(id) for id in evidence_id_list]
-        print(u"证据列表:"+",".join(evidence_id_list_print)) #log_tree_operation.log_tree[id]['name']
+        print(u"Evidences:"+",".join(evidence_id_list_print)) #log_tree_operation.log_tree[id]['name']
 
         # 2. 从证据出发，获得证据对应的节点到诉请节点的整个路径（有几个证据，就有几个路径）
         path_node_list_list=[]
         for i,node_evidence_id in enumerate(evidence_id_list):
             path_node_list_temp=self.get_path_from_evidence_to_appeal(node_evidence_id, appeal_id)
-            print("path_node_list_temp:",path_node_list_temp)
+            #print("path_node_list_temp:",path_node_list_temp)
             path_node_list_list.append(path_node_list_temp)
-        print("path_node_list_list:",path_node_list_list)
+        #print("path_node_list_list:",path_node_list_list)
 
         # 3. 对每一个路径，分别设置每一个可以设置的节点值，直到不能计算的节点
         for sub_path_list in path_node_list_list:

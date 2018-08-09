@@ -9,10 +9,10 @@ from ClaimObject import Claim
 from LegalCaseObject import LegalCase
 from LogTreeOperationObject import LogTreeOperation
 
-PRINCIPAL_DEMAND=5       # 本金诉求
+PRINCIPAL_DEMAND=1       # 本金诉求
 
-WRITTEN_AGREEMENT=9     # 7:书面协议
-DEFENDANT_CONFESSED=-99  # 被告自认
+WRITTEN_AGREEMENT=4     # 7:书面协议
+DEFENDANT_CONFESSED=12  # 被告自认
 #
 
 #WRITTEN_AGREEMENT=8     # 8：借的意思表示
@@ -34,7 +34,7 @@ DEFENDANT_CONFESSED=-99  # 被告自认
 #WRITTEN_AGREEMENT=7     #
 
 def main():
-    print("输入：-----------------------------------")
+    print("Input：-----------------------------------")
     #1. 获得诉请列表：get appeal list
     appeal_principal=Claim(PRINCIPAL_DEMAND)
     #2. 获得证据列表：get evidence list
@@ -57,20 +57,20 @@ def main():
     # 得到结论
     conclusion=log_tree_operation.get_conclusion()
     result_bool=conclusion.get_result_bool()
-    result_string=( u"成立" if result_bool==True else u"不成立")
-    print("输出：-----------------------------------")
-    print(u"判决结论:%s" %result_string)
+    result_string=( u"Support" if result_bool==True else u"Not support")
+    print("Output：-----------------------------------")
+    print(u"Conclusion:%s" %result_string)
     yes_path=conclusion.get_path_yes()
     no_path=conclusion.get_path_no()
     if result_bool==True:
-        print("成立的路径:")
+        print("Path why support the claim:")
         for sub_list in yes_path:
             sub_list_print=[log_tree_operation.log_tree[id]['name']+str(id) for id in sub_list]
             print("-->".join(sub_list_print))
     else:
         sub_list_print=[log_tree_operation.log_tree[id]['name']+str(id) for id in no_path]
         print("")
-        print("不成立的路径:" )
+        print("Path why not support the claim:" )
         print("-->".join(sub_list_print))
 
 main()
